@@ -11,7 +11,7 @@ class Author(models.Model):
     biography = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name} {self.father_name}'
+        return f'{self.last_name} {self.first_name[0]}.{self.father_name[0]}.'
 
 
 class Publisher(models.Model):

@@ -29,18 +29,19 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+
 def book_details(request, book_id):
-    product = get_object_or_404(Book, id=book_id)
+    book = get_object_or_404(Book, id=book_id)
 
     if request.method == "POST":
         messages.success(request, f"{book.title} added to your cart.")
-        return redirect("cart:add_to_cart", product_id=product.id)
+        return redirect("cart:add_to_cart", book_id=book.id)
 
     context = {
-        "product": product,
+        "book": book,
     }
 
-    return render(request, "products/product_detail.html", context)
+    return render(request, "book_detail.html", context)
 
 
 @login_required(login_url='/login/')
