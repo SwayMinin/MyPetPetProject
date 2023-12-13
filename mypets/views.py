@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views import View
+
 from .models import Cart, Book, Author
 
 
@@ -11,7 +13,7 @@ def index(request):
     # Generate counts of some of the main objects
     num_books = Book.objects.all().count()
 
-    # Available books (status = 'a')
+    # Books in stock (status = 'a')
     num_books_available = Book.objects.filter(stock_quantity__gt=0).count()
 
     # The 'all()' is implied by default.
@@ -21,10 +23,24 @@ def index(request):
         'num_books': num_books,
         'num_books_available': num_books_available,
         'num_authors': num_authors,
+        'books': Book.objects.all(),
     }
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+def book_details(request, book_id):
+    product = get_object_or_404(Book, id=book_id)
+
+    if request.method == "POST":
+        messages.success(request, f"{book.title} added to your cart.")
+        return redirect("cart:add_to_cart", product_id=product.id)
+
+    context = {
+        "product": product,
+    }
+
+    return render(request, "products/product_detail.html", context)
 
 
 @login_required(login_url='/login/')

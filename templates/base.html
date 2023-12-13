@@ -4,67 +4,84 @@
 <html lang="ru">
 <head>
     <!-- Required meta tags -->
-    <meta charset="UTF-8">
+    <meta charset=utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
 
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <!--Font awesome icons -->
-    <script src="https://kit.fontawesome.com/92593837a3.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
     <title>{% block title %} {% endblock %} </title>
 </head>
-<header class="p-3 text-bg-dark">
-<div class="container pb-3 border-bottom">
-  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
-    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-      <li>
-          <a href="/" class="nav-link px-2 text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/><path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/></svg>
-              На главную
-          </a>
-      </li>
-      <li><a href="/favorite" class="nav-link px-10 text-white">Избранное</a></li>
-      <li><a href="/faq" class="nav-link px-2 text-white">FAQ</a></li>
-    </ul>
-
-    <form class="col-12 col-lg-4 mb-3 mb-lg-0 me-lg-3" role="search">
-      <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Поиск">
-    </form>
-
-    <div class="text-end">
-        <a href="/cart" class="btn btn-primary me-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/></svg>
-            Корзина
-        </a>
-    </div>
-  </div>
-</div>
-</header>
 <body>
-    <div class="container p-3 my-3">
-        <div class="row">
-            <div class="col-md-12">
-
-            {% block content %}
-
-            {% endblock %}
-            </div>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom border-secondary-subtle">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/"><i class="bi bi-bookmark-heart"></i>
+            Бумажный Остров
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">
+                    Главная
+                </a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">
+                    О нас
+                </a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Магазин
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Весь каталог</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Популярное</a></li>
+                        <li><a class="dropdown-item" href="#!">Новинки</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex mx-3">
+                <div class="input-group">
+                <form class="form-outline" role="search">
+                    <input type="search" class="form-control border-2" placeholder="Поиск..." aria-label="Поиск">
+                    <button type="button" class="btn btn-secondary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                </div>
+                <button class="btn btn-outline-dark border-2 border-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Корзина
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                </button>
+            </form>
         </div>
     </div>
+</nav>
 
+{% block content %}
 
+{% endblock %}
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- A plugin for password show/hide  -->
-    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+<!-- Footer-->
+<footer class="py-4 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; ООО Бумажный Остров 2023</p></div>
+</footer>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!-- A plugin for password show/hide  -->
+<script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+
 </body>
 </html>
