@@ -33,14 +33,18 @@ class Genre(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    genres = models.ManyToManyField(Genre, related_name='books')
+    genres = models.ManyToManyField(Genre, related_name='books', blank=True)
     description = models.TextField()
-    cover_image = models.ImageField()
-    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
+    cover_image = models.ImageField(upload_to="uploads/", null=True, blank=True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
+    sold_number = models.IntegerField(default=0)
     stock_quantity = models.PositiveIntegerField(default=0)
     price = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        ordering = ['-sold_number']
 
     def average_rating(self) -> float:
         return Review.objects.filter(book=self).aggregate(Avg('rating'))['rating__avg'] or 0
@@ -82,26 +86,26 @@ class OrderHistory(models.Model):
 
 
 class Order(models.Model):
-    ORDERED = 'ORDERED'
-    COLLECTED = 'COLLECTED'
+    ORD = 'ORDERED'
+    COLL = 'COLLECTED'
     SENT = 'SENT'
-    SHIPPED = 'SHIPPED'
-    COMPLETED = 'COMPLETED'
-    CANCELED = 'CANCELED'
+    SHIP = 'SHIPPED'
+    COMPL = 'COMPLETED'
+    CANCL = 'CANCELED'
 
     STATUS_CHOICES = (
-        (ORDERED, 'Заказан'),
-        (COLLECTED, 'Собран'),
+        (ORD, 'Заказан'),
+        (COLL, 'Собран'),
         (SENT, 'Отправлен'),
-        (SHIPPED, 'Доставлен'),
-        (COMPLETED, 'Вручён'),
-        (CANCELED, 'Отменён'),
+        (SHIP, 'Доставлен'),
+        (COMPL, 'Вручён'),
+        (CANCL, 'Отменён'),
     )
 
     history = models.ForeignKey(OrderHistory, on_delete=models.CASCADE, related_name='orders')
     address = models.CharField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(default=ORDERED, choices=STATUS_CHOICES, max_length=15)
+    status = models.CharField(default=ORD, choices=STATUS_CHOICES, max_length=15)
 
     def __str__(self):
         return f'Заказ {self.history.user} от {self.date}'
@@ -111,7 +115,7 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f'{self.quantity} x {self.book.title}'

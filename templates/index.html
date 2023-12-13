@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %} Бумажный Остров | Книжный интернет-магазин  {% endblock title%}
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Добро пожаловать!</h1>
+        <p class="lead">
+            Это <b>система логина и регистрации</b>, здесь будет главная информация для пользователя системы.
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Кнопка 1</a>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Кнопка 2</a>
+        </p>
+    </div>
+
+    <nav class="navbar navbar-light bg-light">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </nav>
+
+    <h2>Dynamic content</h2>
+    <p>В магазине есть следующее наполнение:</p>
+    <ul>
+        <li><strong>Всего книг: </strong>{{ num_books }}</li>
+        <li><strong>Книг в наличии: </strong>{{ num_books_available }}</li>
+        <li><strong>Авторов: </strong>{{ num_authors }}</li>
+    </ul>
+
+{% endblock content %}
