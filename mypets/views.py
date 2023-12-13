@@ -41,7 +41,7 @@ def add_to_cart(request, book_id):
     return redirect('cart:cart_detail')
 
 
-@login_required
+@login_required(login_url='/login/')
 def remove_from_cart(request, cart_item_id):
     cart_item = get_object_or_404(Cart, id=cart_item_id)
 
@@ -52,7 +52,7 @@ def remove_from_cart(request, cart_item_id):
     return redirect('cart:cart_detail')
 
 
-@login_required
+@login_required(login_url='/login/')
 def cart_detail(request):
     cart_items = Cart.objects.filter(user=request.user)
     total_price = sum(item.quantity * item.product.price for item in cart_items)

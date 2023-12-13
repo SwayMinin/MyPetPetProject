@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+for model in [Author, Publisher, Genre, Book, Review, OrderHistory, Order, Cart, UserFavorite]:
+    admin.site.register(model)

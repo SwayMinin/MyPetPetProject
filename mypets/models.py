@@ -8,16 +8,15 @@ class Author(models.Model):
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     father_name = models.CharField(max_length=50)
-    biography = models.TextField()
+    biography = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.father_name}'
 
 
 class Publisher(models.Model):
-    name = models.CharField(max_length=150)
-    description = models.TextField()
-    address = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
+    address = models.CharField(max_length=150, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -25,7 +24,7 @@ class Publisher(models.Model):
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -34,7 +33,7 @@ class Genre(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=200)
     genres = models.ManyToManyField(Genre, related_name='books', blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     cover_image = models.ImageField(upload_to="uploads/", null=True, blank=True)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -50,7 +49,7 @@ class Book(models.Model):
         return Review.objects.filter(book=self).aggregate(Avg('rating'))['rating__avg'] or 0
 
     def __str__(self):
-        return f'{self.title} от {self.author}'
+        return f'"{self.title}" от {self.author}'
 
 
 class Review(models.Model):
