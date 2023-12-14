@@ -6,7 +6,8 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Читайте со вкусом</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Только на нашем сайте. Огромный выбор книг любого жанра.</p>
+                <p class="lead fw-normal text-white-50 mb-1">Только на нашем сайте. Огромный выбор книг любого жанра.</p>
+                <p class="lead fw-normal text-white-50 mb-0">В нашем магазине собраны <strong>{{ num_books }} тысячи книг</strong> от <strong>{{ num_authors }}00 авторов</strong>.</p>
             </div>
         </div>
     </header>
@@ -19,8 +20,8 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <a href="book/{{ book.id }}" class="mx-auto">
-                            <img class="mt-3 rounded-3" width="200" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+                        <a href="/book/{{ book.id }}" class="mx-auto">
+                            <img class="mt-3 rounded-3" height="300" width="200" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
                         </a>
                         <hr class="hr mx-3">
                         <!-- Product details-->
@@ -55,12 +56,14 @@
         </div>
     </section>
 
-    <h2>Динамический список</h2>
-    <p>В магазине есть следующие товары:</p>
-    <ul>
-        <li><strong>Всего книг: </strong>{{ num_books }}</li>
-        <li><strong>Книг в наличии: </strong>{{ num_books_available }}</li>
-        <li><strong>Авторов: </strong>{{ num_authors }}</li>
-    </ul>
+    <div class="mx-5 pb-3">
+        <h2 class="h1">Динамический список</h2>
+        <p class="h3 text-regular">Информация:</p>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Всего книг: </strong>{{ num_books }}</li>
+            <li class="list-group-item"><strong>Книг в наличии: </strong>{{ num_books_available }}</li>
+            <li class="list-group-item"><strong>Авторов: </strong>{{ num_authors }}</li>
+        </ul>
+    </div>
 
 {% endblock content %}

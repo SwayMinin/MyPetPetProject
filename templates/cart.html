@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load filter_extra %}
+{% block content %}
+
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h5 class="mb-3">
+                                    <a href="#!" class="text-body text-decoration-none"><i class="bi bi-arrow-left"></i>
+                                        Продолжить покупки
+                                    </a>
+                                </h5>
+                                <hr class="hr" />
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div>
+                                        <p class="mb-1"><strong>Ваша корзина</strong></p>
+                                        <p class="mb-0">В вашей корзине {{ cart_items.count }} предмет{{ cart_items.count|pluralize:'а' }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0">
+                                            <span class="text-muted">Сортировать по:</span>
+                                            <a href="#" class="text-body text-decoration-none"> цене <i class="bi bi-caret-down-fill"></i></a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {% if cart_items %}
+                                    {% for item in cart_items %}
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <img src="{{ item.book.cover_image.url }}" width="10" height="10" class="img-fluid rounded-3" alt="Обложка {{ item.book.title }}" style="width: 65px;">
+
+                                                    <div class="ms-3">
+                                                        <a href="/book/{{ item.book.id }}" class="text-body text-decoration-none">
+                                                            <h5>{{ item.book.title }}</h5>
+                                                        </a>
+                                                        <p class="text-secondary mb-0">{{ item.book.author }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex flex-row align-items-center">
+
+                                                    <div class="me-5">
+                                                        <h5 class="fw-normal mb-0">{{ item.quantity }} шт.</h5>
+                                                    </div>
+                                                    <div>
+                                                        <h5 class="mb-0 me-5">{{ item.book.price }} ₽</h5>
+                                                    </div>
+                                                    <a href="{% url 'remove_from_cart' item.id %}" class="fs-3 me-3" style="color: #cecece;"><i class="bi bi-trash-fill"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>Ваша корзина пуста.</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-dark text-white rounded-4">
+                                    <div class="card-body px-5 py-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <h5 class="mb-0">Оплата заказа</h5>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" class="img-fluid rounded-3" style="width: 45px;" alt="Avatar" />
+                                        </div>
+
+                                        <p class="mb-2">Способ оплаты</p>
+                                        <div class="my-3">
+                                            <div class="form-check">
+                                                <input id="MIR" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                                                <label class="form-check-label" for="MIR">МИР</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input id="UnionPay" name="paymentMethod" type="radio" class="form-check-input" required>
+                                                <label class="form-check-label" for="UnionPay">UnionPay</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input id="Cash" name="paymentMethod" type="radio" class="form-check-input" required>
+                                                <label class="form-check-label" for="Cash">Наличными</label>
+                                            </div>
+                                        </div>
+
+                                        <form class="mt-4">
+                                            <div class="form-outline form-white mb-4">
+                                                <input type="text" id="typeName" class="form-control form-control-lg" siez="17" placeholder="Имя владельца" />
+                                                <label class="form-label px-2" for="typeName">Имя владельца</label>
+                                            </div>
+
+                                            <div class="form-outline form-white mb-4">
+                                                <input type="text" id="typeText" class="form-control form-control-lg" siez="17" placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                                                <label class="form-label px-2" for="typeText">Номер карты</label>
+                                            </div>
+
+                                            <div class="row mb-4">
+                                                <div class="col-md-6">
+                                                    <div class="form-outline form-white">
+                                                        <input type="text" id="typeExp" class="form-control form-control-lg" placeholder="12/2023" size="7" id="exp" minlength="7" maxlength="7" />
+                                                        <label class="form-label px-2" for="typeExp">Истекает</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-outline form-white">
+                                                        <input type="password" id="typeText" class="form-control form-control-lg" placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                                                        <label class="form-label px-2" for="typeText">CVV</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <hr class="my-4" />
+
+                                        <div class="d-flex justify-content-between">
+                                            <p class="mb-2">Стоимость</p>
+                                            <p class="mb-2">{{ total_price }} ₽</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <p>Доставка</p>
+                                            <p>200 ₽</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <p>Итого</p>
+                                            <p>{{ total_price|add:200 }} ₽</p>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <a href="{% url 'checkout' %}" class="btn btn-primary">
+                                                <span class="d-flex justify-content-between">
+                                                    <span class="p-2 fs-5">{{ total_price|add:200 }} ₽</span>
+                                                    <span class="p-2 fs-5">Оплатить онлайн <i class="bi bi-arrow-right"></i></span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

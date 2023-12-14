@@ -110,11 +110,10 @@ class Order(models.Model):
         return f'Заказ {self.history.user} от {self.date}'
 
 
-class Cart(models.Model):
+class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f'{self.quantity} x {self.book.title}'
