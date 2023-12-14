@@ -21,6 +21,6 @@ from django.urls import path, include
 from MyPetPetProject import settings
 
 urlpatterns = [
-    path('', include('mypets.urls')),
     path('admin/', admin.site.urls),
+    path('', include('mypets.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

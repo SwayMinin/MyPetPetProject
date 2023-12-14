@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <form method="POST">
                                 {% csrf_token %}
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-10 offset-md-1">
                                         <div class="form-group">
                                             <label class="small mb-1">Логин</label>
@@ -32,7 +32,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-10 offset-md-1">
                                         <div class="form-group">
                                           <label class="small mb-1">Пароль</label>
@@ -40,16 +40,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-10 offset-md-1">
-                                        <div class="form-group">
+                                        <div class="form-group my-1">
                                             <!-- Adds a Remember me functionality -->
                                             {{ form.remember_me }}
                                             <label> Запомнить меня</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-10 offset-md-1">
                                         <div class="form-group mt-0 mb-1">
                                           <button name="login" class="col-md-12 btn btn-dark" id="login">Войти</button>
