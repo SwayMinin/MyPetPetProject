@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, UpdateUserForm
 from .models import Book, Author, CartItem
 
 
@@ -69,19 +69,28 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form': form})
 
+    def dispatch(self, request, *args, **kwargs):
+        # will redirect to the home page if a user tries to access the register page while logged in
+        if request.user.is_authenticated:
+            return redirect(to='/profile')
 
-def dispatch(self, request, *args, **kwargs):
-    # will redirect to the home page if a user tries to access the register page while logged in
-    if request.user.is_authenticated:
-        return redirect(to='/profile')
-
-    # else process dispatch as it otherwise normally would
-    return super(RegisterView, self).dispatch(request, *args, **kwargs)
+        # else process dispatch as it otherwise normally would
+        return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Ваш профиль успешно изменён!')
+            return redirect(to='profile')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+
+    return render(request, 'profile.html', {'user_form': user_form})
 
 
 def book_details(request, book_id):
@@ -136,4 +145,5 @@ def remove_from_cart(request, cart_item_id):
 
 
 def checkout(request):
+
     return HttpResponseRedirect('/')

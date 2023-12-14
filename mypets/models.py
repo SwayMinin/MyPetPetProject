@@ -57,7 +57,7 @@ class Review(models.Model):
     RATING_LOW = 2
     RATING_NORMAL = 3
     RATING_HIGH = 4
-    RATING_VERY_HIGH = 4
+    RATING_VERY_HIGH = 5
 
     RATING_CHOICES = (
         (RATING_VERY_LOW, 'Ужасно'),
@@ -78,7 +78,7 @@ class Review(models.Model):
 
 
 class OrderHistory(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='order_history')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='order_history', unique=True)
 
     def __str__(self):
         return f'История заказов {self.user}'
@@ -91,6 +91,7 @@ class Order(models.Model):
     SHIP = 'SHIPPED'
     COMPL = 'COMPLETED'
     CANCL = 'CANCELED'
+    RET = 'RETURNED'
 
     STATUS_CHOICES = (
         (ORD, 'Заказан'),
@@ -99,6 +100,7 @@ class Order(models.Model):
         (SHIP, 'Доставлен'),
         (COMPL, 'Вручён'),
         (CANCL, 'Отменён'),
+        (RET, 'Возращён'),
     )
 
     history = models.ForeignKey(OrderHistory, on_delete=models.CASCADE, related_name='orders')
