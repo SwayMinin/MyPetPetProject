@@ -107,21 +107,22 @@ class Order(models.Model):
     status = models.CharField(default=ORD, choices=STATUS_CHOICES, max_length=15)
 
     def __str__(self):
-        return f'Заказ {self.history.user} от {self.date}'
+        return f'Заказ {self.history.user} от {self.date.date()}'
 
 
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.quantity} x {self.book.title}'
-
-    def get_absolute_url(self):
-        return reverse('cart:cart_detail')
+        return f'{self.quantity} x "{self.book.title}"'
 
 
 class UserFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorite_products')
     product = models.ManyToManyField(Book)
+
+    def __str__(self):
+        return f'Избранное {self.user}'
